@@ -1,8 +1,4 @@
-# frozen_string_literal: true
-
-class PromotionRuleSerializer < ActiveModel::Serializer
-  attributes :rules
-
+class Promotion < ApplicationRecord
   def rules # rubocop:disable Metrics/MethodLength
     {
       total: {
