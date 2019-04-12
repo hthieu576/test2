@@ -1,9 +1,23 @@
 # frozen_string_literal: true
 
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Create User
+user = User.find_or_create_by!(first_name: 'hieu', last_name: 'hoang trung', email: 'abc@gmail.com', address: 'hcm')
+
+# Create Orders
+order_1st = Order.find_or_create_by!(user_id: user.id, status: 'ordered', comment: 'case 1')
+order_2nd = Order.find_or_create_by!(user_id: user.id, status: 'ordered', comment: 'case 2')
+order_3rd = Order.find_or_create_by!(user_id: user.id, status: 'ordered', comment: 'case 3')
+
+# Create Products
+Product.find_or_create_by!(order_id: order_1st.id, code: '001', name: 'Lavender heart', price: 9.25)
+Product.find_or_create_by!(order_id: order_1st.id, code: '002', name: 'Personalised cufflinks', price: 45.00)
+Product.find_or_create_by!(order_id: order_1st.id, code: '003', name: 'Kids T-shirt', price: 19.95)
+
+Product.find_or_create_by!(order_id: order_2nd.id, code: '001', name: 'Lavender heart', price: 9.25)
+Product.find_or_create_by!(order_id: order_2nd.id, code: '003', name: 'Kids T-shirt', price: 19.95)
+Product.find_or_create_by!(order_id: order_2nd.id, code: '001', name: 'Lavender heart', price: 9.25)
+
+Product.find_or_create_by!(order_id: order_3rd.id, code: '001', name: 'Lavender heart', price: 9.25)
+Product.find_or_create_by!(order_id: order_3rd.id, code: '002', name: 'Personalised cufflinks', price: 45.00)
+Product.find_or_create_by!(order_id: order_3rd.id, code: '001', name: 'Lavender heart', price: 9.25)
+Product.find_or_create_by!(order_id: order_3rd.id, code: '003', name: 'Kids T-shirt', price: 19.95)

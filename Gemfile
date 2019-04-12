@@ -10,6 +10,7 @@ gem 'rails', '~> 5.2.3'
 
 # Database..
 gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'sqlite3'
 
 # Authentication and Authorization
 gem 'devise'
@@ -18,6 +19,9 @@ gem 'pundit'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
+
+# API
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -61,6 +65,9 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock'
 end
+
+# Others
+gem 'rails-patterns'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
