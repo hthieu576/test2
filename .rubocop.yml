@@ -1,0 +1,22 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - "vendor/bundle/**/*"
+    - ",/**/*"
+    - ".git/**/*"
+    - "bin/*"
+    - "db/schema.rb"
+    - "db/migrate/*.rb"
+    - "db/seeds.rb"
+    - "log/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "config/initializers/*"
+Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+ClassAndModuleChildren:
+  Enabled: false
