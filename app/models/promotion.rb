@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Promotion < ApplicationRecord
   def rules # rubocop:disable Metrics/MethodLength
     {
       total: {
         min_amount: 60,
-        discount_precent: 10,
+        discount_precent: 10
       },
       products: {
         '001' => {
