@@ -40,19 +40,11 @@ class Checkouts::CreateService < Patterns::Service
     amount = products_scanned.each_with_object([]) do |product, result|
       result << calculating_price!(product)
     end.sum
-    total_amount_eligible? ? apply_discount(amount) : amount
-  end
-
-  def quantity_eligible?(product_code)
-    @order.quantity_product(product_code) >= @checkout.rules[:products]['001'][:min_quantity]
-  end
-
-  def total_amount_eligible?
-    @order.total_amount >= @checkout.rules[:total][:min_amount]
+    @order.total_amount_eligible? ? apply_discount(amount) : amount
   end
 
   def calculating_price!(product)
-    if quantity_eligible?(product[:code])
+    if @order.quantity_eligible?(product[:code])
       @checkout.rules[:products]['001'][:price_discount] * product[:quantity]
     else
       product[:price] * product[:quantity]
