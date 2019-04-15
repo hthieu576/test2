@@ -25,38 +25,49 @@ class Checkouts::CreateService < Patterns::Service
 
   def creating_checkout!
     @order.create_checkout!(method_type: 'creditcard',
-                            total_amount: total_amount_promoted,
+                            total_amount: total_amount,
                             status: 'confirmed')
   end
 
-  def products_scanned!
-    @products.each_with_object([]) do |product, array|
-      array << scan_item(product)
+  def products_scanned
+    @products.each_with_object([]) do |product, result|
+      result << scan_item(product)
     end.uniq
   end
 
   def scan_item(product)
     ProductSerializer.new(product).as_json
-                     .merge(quantity: quantity(product))
+                     .merge(quantity: quantity_product(product.code))
   end
 
-  def promotions?(product)
-    quantity_eligible?(product) || total_amount_eligible?
+  def quantity_product(product_code)
+    @products.map(&:code).count(product_code)
   end
 
-  def quantity(product)
-    @products.map(&:code).count(product.code)
+  def total_amount
+    total_amount = products_scanned.each_with_object([]) do |product, result|
+      result << calculating_price!(product)
+    end.sum
+    total_amount_eligible? ? apply_discount(total_amount) : total_amount
   end
 
-  def total_amount_promoted
-    @products.map(&:price).sum
-  end
-
-  def quantity_eligible?(product)
-    quantity(product) >= @promotional_rules[:products]['001'][:min_quantity]
+  def quantity_eligible?(product_code)
+    quantity_product(product_code) >= @promotional_rules[:products]['001'][:min_quantity]
   end
 
   def total_amount_eligible?
     @order.total_amount >= @promotional_rules[:total][:min_amount]
+  end
+
+  def calculating_price!(product)
+    if quantity_eligible?(product[:code])
+      @promotional_rules[:products]['001'][:price_discount] * product[:quantity]
+    else
+      product[:price] * product[:quantity]
+    end
+  end
+
+  def apply_discount(amount)
+    amount - (@promotional_rules[:total][:discount_percent].to_f / 100 * amount)
   end
 end

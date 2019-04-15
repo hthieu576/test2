@@ -5,12 +5,12 @@ class Promotion < ApplicationRecord
     {
       total: {
         min_amount: 60,
-        discount_precent: 10
+        discount_percent: 10
       },
       products: {
         '001' => {
           min_quantity: 2,
-          promo_price: 8.5
+          price_discount: 8.5
         }
       }
     }

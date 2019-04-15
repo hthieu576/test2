@@ -5,6 +5,7 @@ class Orders::CheckoutsController < ActionController::Base
 
   def create
     ::Checkouts::CreateService.call(@order, @promotional_rules).result
+    redirect_to order_thanks_path(@order)
   end
 
   private
