@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Promotion < ApplicationRecord
+module PromotionConcern
+  extend ActiveSupport::Concern
+
   def rules # rubocop:disable Metrics/MethodLength
     {
       total: {
