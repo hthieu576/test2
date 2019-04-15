@@ -20,7 +20,7 @@ class Checkouts::CreateService < Patterns::Service
 
   def validate!
     raise Error, 'Products not found' if @products.blank?
-    raise Error, 'Order already exists' if @order.checkout.present?
+    raise Error, 'Order already checked' if @order.checkout.present?
   end
 
   def creating_checkout!
