@@ -31,7 +31,7 @@ price = co.total
 
 * Implement a checkout system that fulfills these requirements. Do this outside of any frameworks. We’re looking for candidates to demonstrate their knowledge of TDD.
 
-## Test data
+## Test result sample.
 ---------
 ```
 Basket: 001,002,003
@@ -43,7 +43,7 @@ Total price expected: £36.95
 Basket: 001,002,001,003
 Total price expected: £73.76
 ```
-
+-------------------------------------------
 ## prepare data for testing.
 ---------
 ```
