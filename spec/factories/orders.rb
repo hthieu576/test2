@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :order do
     association :user
     status { 'ordered' }
-    text { Faker::Lorem.word }
+    comment { Faker::Lorem.word }
   end
 end
