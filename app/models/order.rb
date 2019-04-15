@@ -8,4 +8,8 @@ class Order < ApplicationRecord
   def total_amount
     products.map(&:price).sum
   end
+
+  def quantity_product(product_code)
+    products.map(&:code).count(product_code)
+  end
 end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Orders::CheckoutsController < ActionController::Base
-  before_action :set_order, :set_promotional_rules, only: %i[create]
+  before_action :set_order, only: %i[create]
 
   def create
-    ::Checkouts::CreateService.call(@order, @promotional_rules).result
+    ::Checkouts::CreateService.call(@order).result
     redirect_to order_thanks_path(@order)
   end
 
@@ -13,9 +13,5 @@ class Orders::CheckoutsController < ActionController::Base
   def set_order
     @order = Order.find(params[:order_id])
     authorize @order, :order_owner?
-  end
-
-  def set_promotional_rules
-    @promotional_rules = Promotion.new.rules
   end
 end
