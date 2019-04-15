@@ -43,3 +43,15 @@ Total price expected: £36.95
 Basket: 001,002,001,003
 Total price expected: £73.76
 ```
+
+## prepare data for testing.
+---------
+```
+rails db:drop && rails db:create && rails db:migrate
+```
+
+## run seed data.
+---------
+```
+rails db:seed
+```
