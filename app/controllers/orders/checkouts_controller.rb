@@ -4,7 +4,8 @@ class Orders::CheckoutsController < ActionController::Base
   before_action :set_order, :set_promotional_rules, only: %i[create]
 
   def create
-    ::Checkouts::ItemFromOrderService.call(@order, @promotional_rules)
+    ::Checkouts::CreateService.call(@order, @promotional_rules).result
+    redirect_to order_thanks_path(@order)
   end
 
   private
