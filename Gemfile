@@ -12,6 +12,8 @@ gem 'rails', '~> 5.2.3'
 gem 'sqlite3'
 
 # Authentication and Authorization
+gem 'devise'
+gem 'devise_ldap_authenticatable'
 gem 'pundit'
 
 # Use Puma as the app server
