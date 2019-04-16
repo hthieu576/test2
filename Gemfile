@@ -9,7 +9,6 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.3'
 
 # Database..
-gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'sqlite3'
 
 # Authentication and Authorization

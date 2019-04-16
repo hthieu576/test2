@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: orders
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  status     :string           not null
+#  comment    :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
@@ -13,7 +25,7 @@ RSpec.describe Order, type: :model do
     subject { order.total_amount }
 
     let(:order) { create(:order) }
-    let!(:products) { create_list(:product, 2, order_id: order.id) }
+    let!(:products) { create_list(:product, 2, order_id: order.id, price: 10) }
 
     it { is_expected.to eq(20) }
   end
@@ -34,7 +46,7 @@ RSpec.describe Order, type: :model do
 
     context 'when total_amount less than min_amount eligible' do
       let!(:products) do
-        create_list(:product, 2, order_id: order.id)
+        create_list(:product, 2, order_id: order.id, price: 10)
       end
 
       it { is_expected.to eq false }

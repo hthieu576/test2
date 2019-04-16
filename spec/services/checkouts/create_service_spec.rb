@@ -20,7 +20,7 @@ RSpec.describe Checkouts::CreateService do
 
     context 'when empty product' do
       it 'has error' do
-        expect { subject }.to raise_error('Products not found')
+        expect { subject }.to raise_error('Product was not found')
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Checkouts::CreateService do
       let!(:checkout) { create(:checkout, order_id: order.id) }
 
       it 'has error' do
-        expect { subject }.to raise_error('Order already checked')
+        expect { subject }.to raise_error('Order has already checked')
       end
     end
 
