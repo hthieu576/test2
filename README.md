@@ -47,7 +47,7 @@ Total price expected: £73.76
 ## prepare data for testing.
 ---------
 ```
-rails db:drop && rails db:create && rails db:migrate
+rails db:create && rails db:migrate
 ```
 
 ## run seed data.
