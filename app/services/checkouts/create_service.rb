@@ -29,6 +29,7 @@ class Checkouts::CreateService < Patterns::Service
                             status: :confirmed)
   end
 
+  # Scan products to check quantity.
   def products_scanned
     @products.each_with_object([]) do |product, result|
       result << @checkout.scan_item(product)
