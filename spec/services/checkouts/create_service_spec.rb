@@ -34,9 +34,59 @@ RSpec.describe Checkouts::CreateService do
     end
 
     context 'when nominal case' do
-      let!(:products) { create_list(:product, 2, order_id: order.id) }
+      context 'with case basket: 001,002,003' do
+        let!(:products) do
+          create(:product, order_id: order.id, code: '001', price: 9.25)
+          create(:product, order_id: order.id, code: '002', price: 45.00)
+          create(:product, order_id: order.id, code: '003', price: 19.95)
+        end
 
-      it { expect { subject }.to change { Checkout.count }.from(0).to(1) }
+        it 'total_amount' do
+          expect(subject.total_amount).to eq 66.78
+        end
+
+        it { expect { subject }.to change { Checkout.count }.from(0).to(1) }
+      end
+
+      context 'with case basket: 001,003,001' do
+        let!(:products) do
+          create_list(:product, 2, order_id: order.id, code: '001', price: 9.25)
+          create(:product, order_id: order.id, code: '003', price: 19.95)
+        end
+
+        it 'total_amount' do
+          expect(subject.total_amount).to eq 36.95
+        end
+
+        it { expect { subject }.to change { Checkout.count }.from(0).to(1) }
+      end
+
+      context 'with case basket: 001,002,001,003' do
+        let!(:products) do
+          create_list(:product, 2, order_id: order.id, code: '001', price: 9.25)
+          create(:product, order_id: order.id, code: '002', price: 45.00)
+          create(:product, order_id: order.id, code: '003', price: 19.95)
+        end
+
+        it 'total_amount' do
+          expect(subject.total_amount).to be_within(0.1).of(73.76)
+        end
+
+        it { expect { subject }.to change { Checkout.count }.from(0).to(1) }
+      end
+
+      context 'with has not promotion case' do
+        let!(:products) do
+          create(:product, order_id: order.id, code: '001', price: 9.25)
+          create(:product, order_id: order.id, code: '003', price: 19.95)
+        end
+
+        it 'total_amount' do
+          expect(subject.total_amount).to eq 29.2
+        end
+
+        it { expect { subject }.to change { Checkout.count }.from(0).to(1) }
+      end
     end
   end
 end
