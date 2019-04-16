@@ -27,7 +27,7 @@ RSpec.describe 'Orders::CheckoutsController', type: :request do
 
     context 'when empty product' do
       it 'has error' do
-        expect { subject }.to raise_error('Product was not found')
+        expect { subject }.to raise_error('Product can not be found')
       end
     end
 
