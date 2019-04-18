@@ -20,7 +20,7 @@ RSpec.describe Checkout do
             price_discount: 8.5
           }
         }
-      }.freeze
+      }
     end
 
     it { is_expected.to be_a described_class }
@@ -44,7 +44,7 @@ RSpec.describe Checkout do
             price_discount: 8.5
           }
         }
-      }.freeze
+      }
     end
 
     context 'when empty product' do
