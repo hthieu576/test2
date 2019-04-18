@@ -62,7 +62,7 @@ RSpec.describe Checkout do
         end
 
         it 'total_price_expected' do
-          expect(subject).to eq({ basket: '001, 002, 003', total_price_expected: '£66.78' })
+          expect(subject).to eq(basket: '001, 002, 003', total_price_expected: '£66.78')
         end
       end
 
@@ -73,7 +73,7 @@ RSpec.describe Checkout do
         end
 
         it 'total_price_expected' do
-          expect(subject).to eq({ basket: '001, 001, 003', total_price_expected: '£36.95'})
+          expect(subject).to eq(basket: '001, 001, 003', total_price_expected: '£36.95')
         end
       end
 
@@ -85,7 +85,7 @@ RSpec.describe Checkout do
         end
 
         it 'total_price_expected' do
-          expect(subject).to eq ({ basket: '001, 001, 002, 003', total_price_expected: '£73.76' })
+          expect(subject).to eq(basket: '001, 001, 002, 003', total_price_expected: '£73.76')
         end
       end
 
@@ -96,7 +96,7 @@ RSpec.describe Checkout do
         end
 
         it 'total_price_expected' do
-          expect(subject).to eq({ basket: '001, 003', total_price_expected: '£29.2' })
+          expect(subject).to eq(basket: '001, 003', total_price_expected: '£29.2')
         end
       end
     end

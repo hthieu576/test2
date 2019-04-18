@@ -16,7 +16,7 @@ class Promotion
     }
   }.freeze
 
-  def initialize(rules=nil)
+  def initialize(rules = nil)
     @rules = rules
   end
 end
