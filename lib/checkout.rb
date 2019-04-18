@@ -12,14 +12,14 @@ class Checkout
     # ....
   }.freeze
 
-  def initialize(order_id, promotional_rules)
+  def initialize(order_id, promotion)
     @order_id = order_id
-    @promotional_rules = promotional_rules
+    @promotional_rules = Promotion.new(promotion).rules if promotion
   end
 
   def call
     validate!
-    { basket: products.pluck(:code).join(', '), total_price_expected: "£#{total_amount.round(2)}" }
+    { basket: products.pluck(:code).join(', '), total_price_expected: "£#{total_price_expected.round(2)}" }
   end
 
   def validate!
@@ -38,7 +38,7 @@ class Checkout
     end.uniq
   end
 
-  def total_amount
+  def total_price_expected
     amount = products_scanned.each_with_object([]) do |product, result|
       result << calculating_price!(product)
     end.sum

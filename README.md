@@ -55,3 +55,35 @@ rails db:create && rails db:migrate
 ```
 rails db:seed
 ```
+
+## How to test.
+
+* Step 1: Run command from project dir.
+```
+irb -I . -r lib/checkout.rb
+```
+* Step 2: Run command.
+```
+Checkout.new(order_id, promotional_rules).call
+```
+** For example:
+we'll checkout order with id = 1 and promotion_rules like this.
+```
+order_id = 1
+promotional_rule = {
+  total: {
+    min_amount: 60,
+    discount_percent: 10
+  },
+  products: {
+    '001' => {
+      min_quantity: 2,
+      price_discount: 8.5
+    }
+  }
+}
+```
+** We'll run command.
+```
+Checkout.new(order_id=1, Promotion::RULES).call
+```

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Promotion
+  attr_reader :rules
+
   RULES = {
     total: {
       min_amount: 60,
@@ -13,4 +15,8 @@ class Promotion
       }
     }
   }.freeze
+
+  def initialize(rules=nil)
+    @rules = rules
+  end
 end
