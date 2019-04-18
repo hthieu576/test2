@@ -53,6 +53,16 @@ RSpec.describe Checkout do
       end
     end
 
+    context 'when order not found' do
+      subject do
+        described_class.new(9999, rules).call
+      end
+
+      it 'raise exception' do
+        expect { subject }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context 'when nominal case' do
       context 'with case basket: 001,002,003' do
         let!(:products) do

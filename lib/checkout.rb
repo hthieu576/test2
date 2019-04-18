@@ -28,6 +28,7 @@ class Checkout
   attr_accessor :obj
 
   def validate!
+    raise 'Order can not be found' if order.blank?
     raise 'Product can not be found' if products.blank?
   end
 
