@@ -22,6 +22,12 @@ class Checkout
     { basket: products.pluck(:code).join(', '), total_price_expected: "£#{total_price_expected.round(2)}" }
   end
 
+
+  private
+
+  attr_reader :promotional_rules
+  attr_accessor :obj
+
   def validate!
     raise 'Product can not be found' if products.blank?
   end
@@ -44,11 +50,6 @@ class Checkout
     end.sum
     order.total_amount_eligible? ? apply_discount(amount) : amount
   end
-
-  private
-
-  attr_reader :promotional_rules
-  attr_accessor :obj
 
   def calculating_price!(product)
     if order.quantity_eligible?(product[:code])

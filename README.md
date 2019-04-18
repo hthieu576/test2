@@ -88,3 +88,8 @@ promotional_rule = {
 ```
 Checkout.new(order_id=1, Promotion::RULES).call
 ```
+
+* expected result
+```
+{ basket: '001, 002, 003', total_price_expected: '£66.78' }
+```
