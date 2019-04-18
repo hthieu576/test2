@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('../../config/environment',  __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require_relative 'promotion'
 require_relative '../app/models/product.rb'
 require_relative '../app/models/order.rb'
@@ -8,37 +8,65 @@ require_relative '../app/models/order.rb'
 class Checkout
   DATA_MAPPING = {
     order: Order,
-    product: Product,
+    product: Product
+    # ....
   }.freeze
 
-  def initialize(rules=nil)
-    @products = []
-    @promotional_rules = Promotion.new(rules) if rules
+  def initialize(order_id, promotional_rules)
+    @order_id = order_id
+    @promotional_rules = promotional_rules
   end
 
-  def product
-    self.obj = :product
-    data_instance.all
+  def call
+    validate!
+    { basket: products.pluck(:code).join(', '), total_price_expected: "£#{total_amount.round(2)}" }
   end
 
-  def scan(product)
-    product_scanned = find_product_by(product[:code])
-    if product_scanned.present?
-      product_scanned[:quantity] += 1
-    else
-      @products << { data: product, quantity: 1 }
-    end
+  def validate!
+    raise 'Product can not be found' if products.blank?
+  end
+
+  def order
+    self.obj = :order
+    data_instance.find @order_id
+  end
+
+  # Scan products to check quantity.
+  def products_scanned
+    products.each_with_object([]) do |product, result|
+      result << { code: product[:code], price: product[:price], quantity: order.quantity_product(product[:code]) }
+    end.uniq
+  end
+
+  def total_amount
+    amount = products_scanned.each_with_object([]) do |product, result|
+      result << calculating_price!(product)
+    end.sum
+    order.total_amount_eligible? ? apply_discount(amount) : amount
   end
 
   private
 
-  def find_product_by(code)
-    @products.detect { |product| product[:data][:code] == code }
+  attr_reader :promotional_rules
+  attr_accessor :obj
+
+  def calculating_price!(product)
+    if order.quantity_eligible?(product[:code])
+      promotional_rules[:products]['001'][:price_discount] * product[:quantity]
+    else
+      product[:price] * product[:quantity]
+    end
   end
 
-  attr_accessor :obj
+  def apply_discount(amount)
+    amount - (promotional_rules[:total][:discount_percent].to_f / 100 * amount)
+  end
 
   def data_instance
     @data_instance ||= DATA_MAPPING[obj]
+  end
+
+  def products
+    order.products
   end
 end
