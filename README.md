@@ -66,8 +66,9 @@ irb -I . -r lib/checkout.rb
 ```
 Checkout.new(order_id, promotional_rules).call
 ```
-** For example:
-we'll checkout order with id = 1 and promotion_rules like this.
+
+* For example: we'll checkout order with id = 1 and promotion_rules like this.
+
 ```
 order_id = 1
 promotional_rule = {
@@ -83,7 +84,7 @@ promotional_rule = {
   }
 }
 ```
-** We'll run command.
+* We'll run command.
 ```
 Checkout.new(order_id=1, Promotion::RULES).call
 ```
