@@ -64,14 +64,14 @@ irb -I . -r lib/checkout.rb
 ```
 * Step 2: Run command.
 ```
-Checkout.new(order_id, promotional_rules).call
+Checkout.new(order_id=1, Promotion::RULES).call
 ```
 
-* For example: we'll checkout order with id = 1 and promotion_rules like this.
+* For example: we'll checkout order with id = 1 and promotional_rules like this.
 
 ```
 order_id = 1
-promotional_rule = {
+promotional_rules = {
   total: {
     min_amount: 60,
     discount_percent: 10
@@ -86,7 +86,7 @@ promotional_rule = {
 ```
 * We'll run command.
 ```
-Checkout.new(order_id=1, Promotion::RULES).call
+Checkout.new(order_id=1, promotional_rules).call
 ```
 
 * expected result
