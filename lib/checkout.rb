@@ -28,13 +28,16 @@ class Checkout
   attr_accessor :obj
 
   def validate!
-    raise 'Order can not be found' if order.blank?
     raise 'Product can not be found' if products.blank?
   end
 
   def order
     self.obj = :order
     data_instance.find @order_id
+  end
+
+  def products
+    order.products
   end
 
   # Scan products to check quantity.
@@ -65,9 +68,5 @@ class Checkout
 
   def data_instance
     @data_instance ||= DATA_MAPPING[obj]
-  end
-
-  def products
-    order.products
   end
 end
