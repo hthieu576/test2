@@ -4,8 +4,8 @@ class Orders::CheckoutsController < ActionController::Base
   before_action :set_order, only: %i[create]
 
   def create
-    ::Checkouts::CreateService.call(@order).result
-    redirect_to order_thanks_path(@order)
+    # ::Checkouts::CreateService.call(@order).result
+    # redirect_to order_thanks_path(@order)
   end
 
   private

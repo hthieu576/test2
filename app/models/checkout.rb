@@ -20,8 +20,4 @@ class Checkout < ApplicationRecord
 
   enum status: { failed: 'failed', confirmed: 'confirmed' }
   enum method_type: { creditcard: 'creditcard', paypal: 'paypal' }
-
-  def scan_item(product)
-    ProductSerializer.new(product).as_json
-  end
 end

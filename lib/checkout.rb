@@ -22,7 +22,6 @@ class Checkout
     { basket: products.pluck(:code).join(', '), total_price_expected: "£#{total_price_expected.round(2)}" }
   end
 
-
   private
 
   attr_reader :promotional_rules
